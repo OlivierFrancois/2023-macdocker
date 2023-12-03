@@ -1,0 +1,9 @@
+projects :
+  bbapp:
+    project_name: 'bbapp'
+    document_root: 'bbapp/public'
+    project_path: './../www/2023-bbapp'
+  adoxia_v3:
+    project_name: 'adoxia_v3'
+    document_root: 'adoxia_v3/public'
+    project_path: './../www/adoxia_v3'
