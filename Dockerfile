@@ -3,6 +3,7 @@ FROM php:8.1-apache-buster
 ARG DOCKER_WHOAMI
 ARG DOCKER_NODE_MAJOR
 
+# Node
 RUN apt-get update \
     && apt-get install -y ca-certificates curl gnupg \
     && mkdir -p /etc/apt/keyrings \
@@ -11,16 +12,19 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install -y nodejs
 
+# PhP ext
 RUN apt-get update \
-    && apt-get install -y libzip-dev git wget sudo vim --no-install-recommends \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-
-RUN docker-php-ext-install pdo mysqli pdo_mysql zip;
+    && apt-get install -y --no-install-recommends \
+            locales apt-utils git libicu-dev g++ libpng-dev libxml2-dev libzip-dev libonig-dev libxslt-dev unzip libpq-dev wget \
+            apt-transport-https lsb-release ca-certificates \
+    && apt-get install sudo \
+    && apt-get install -y vim
 
 RUN curl -sS https://getcomposer.org/installer | php -- \
     &&  mv composer.phar /usr/local/bin/composer
+
+RUN docker-php-ext-configure intl
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql opcache intl zip calendar dom mbstring gd xsl
 
 # Enable apache modules
 RUN a2enmod rewrite
