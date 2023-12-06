@@ -36,9 +36,8 @@ RUN apt-get install -y ssl-cert
 # Setup Apache2 mod_ssl
 RUN a2enmod ssl
 
-COPY template.conf /etc/apache2/sites-available/template.conf
-
 RUN useradd -ms /bin/bash ${DOCKER_WHOAMI}
+RUN echo "${DOCKER_WHOAMI}:admin" | chpasswd
 RUN usermod -aG sudo ${DOCKER_WHOAMI}
 RUN adduser ${DOCKER_WHOAMI} www-data
 RUN chown ${DOCKER_WHOAMI}:www-data /var/www -R

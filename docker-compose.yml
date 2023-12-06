@@ -9,8 +9,12 @@ services:
         DOCKER_NODE_MAJOR: '${DOCKER_NODE_MAJOR}'
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ../../www:/var/www/
+      - ./php.ini:/usr/local/etc/php/php.ini
+      - ./template.conf:/etc/apache2/sites-available/template.conf
+      - ./template-ssl.conf:/etc/apache2/sites-available/template-ssl.conf
   db:
     container_name: '${DOCKER_ENVIRONMENT_NAME}-database'
     image: mysql:8-oracle
